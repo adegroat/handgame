@@ -14,5 +14,6 @@ public class MainActivity extends Activity {
         renderView = new RenderView(getApplicationContext());
         setContentView(renderView);
         renderView.start();
+
     }
 }

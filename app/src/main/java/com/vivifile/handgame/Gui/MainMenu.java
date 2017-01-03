@@ -36,7 +36,7 @@ public class MainMenu extends Menu {
 
         switch(b.getId()) {
             case 0:
-                gl.resumeGame();
+                gl.startNewGame();
                 break;
             case 1:
                 gl.menus.push(new HelpMenu(gl));

@@ -27,6 +27,6 @@ public class InGameMenu extends Menu {
 
     @Override
     protected void onClick(Button b) {
-        if(b.getId() == 0) gl.pauseGame();
+        if(b.getId() == 0) gl.getGame().pause();
     }
 }

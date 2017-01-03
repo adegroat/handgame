@@ -54,6 +54,6 @@ public class RenderView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void start(){
-        gameLoop = new GameLoop(surfaceHolder);
+        gameLoop = new GameLoop(surfaceHolder, getContext());
     }
 }

@@ -31,6 +31,6 @@ public class PauseMenu extends Menu {
 
     @Override
     protected void onClick(Button b) {
-        if(b.getId() == 0) gl.resumeGame();
+        if(b.getId() == 0) gl.getGame().resume();
     }
 }
