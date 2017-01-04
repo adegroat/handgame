@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.vivifile.handgame.GameLoop;
+import com.vivifile.handgame.RenderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,10 @@ import java.util.List;
  */
 
 public class Menu {
+
+    public static final int CENTER_X = RenderView.WIDTH / 2;
+    public static final int CENTER_Y = RenderView.HEIGHT / 2;
+
 
     private List<Button> buttons;
     protected GameLoop gl;

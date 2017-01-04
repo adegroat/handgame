@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 
 import com.vivifile.handgame.GameLoop;
+import com.vivifile.handgame.Render;
 import com.vivifile.handgame.RenderView;
 
 /**
@@ -26,7 +27,7 @@ public class PauseMenu extends Menu {
         super.draw(can);
         paint.setTextSize(70);
         paint.setColor(Color.WHITE);
-        can.drawText("Paused", 200, 200, paint);
+        Render.drawCenterText(can, paint, CENTER_X, CENTER_X, "Paused");
     }
 
     @Override

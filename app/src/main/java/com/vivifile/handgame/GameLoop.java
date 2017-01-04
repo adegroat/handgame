@@ -83,6 +83,7 @@ public class GameLoop extends Thread {
 
     public boolean onTouchEvent(MotionEvent event) {
         if(!menus.empty()) menus.peek().handleInputs(event);
+        if(game != null) game.onTouchEvent(event);
         return true;
     }
 

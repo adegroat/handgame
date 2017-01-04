@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Rect;
 
 import com.vivifile.handgame.GameLoop;
+import com.vivifile.handgame.Render;
 import com.vivifile.handgame.RenderView;
 
 /**
@@ -13,12 +14,9 @@ import com.vivifile.handgame.RenderView;
 
 public class HelpMenu extends Menu {
 
-    private String title = "How To Play";
-    private Rect textBounds = new Rect();
 
     public HelpMenu(GameLoop gl) {
         super(gl);
-        paint.getTextBounds(title, 0, title.length(), textBounds);
     }
 
     @Override
@@ -31,11 +29,11 @@ public class HelpMenu extends Menu {
         super.draw(can);
         paint.setColor(Color.WHITE);
         paint.setTextSize(70);
-        can.drawText("How To Play", (RenderView.WIDTH - textBounds.width()) / 2, 200, paint);
+        Render.drawCenterText(can, paint, CENTER_X, 300, "How To Play");
 
         paint.setTextSize(40);
-        can.drawText("Each round you're assigned a specific color.", 70, 300, paint);
-        can.drawText("When it lands on your color, press the correct button.", 70, 350, paint);
+        can.drawText("Each round you're assigned a specific color.", 70, 400, paint);
+        can.drawText("When it lands on your color, press the correct button.", 70, 450, paint);
     }
 
     @Override

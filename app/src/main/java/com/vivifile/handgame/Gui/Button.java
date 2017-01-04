@@ -3,11 +3,10 @@ package com.vivifile.handgame.Gui;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
-
 import com.vivifile.handgame.GameLoop;
+import com.vivifile.handgame.Render;
 import com.vivifile.handgame.RenderView;
 
 /**
@@ -23,32 +22,45 @@ public class Button {
     public static final int BUTTON_CENTER_Y = (RenderView.HEIGHT - BUTTON_HEIGHT) / 2;
 
     private int id;
-    private int x, y;
+    private int x, y, width, height;
     private String text;
     private boolean isHolding;
     private Paint paint;
-    private Rect textBounds;
 
     public Button(int id, int x, int y, String text){
         this.id = id;
         this.x = x;
         this.y = y;
+        this.width = BUTTON_WIDTH;
+        this.height = BUTTON_HEIGHT;
         this.text = text;
+
+        init();
+    }
+
+    public Button(int id, int x, int y, int width, int height, String text) {
+        this.id = id;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.text = text;
+
+        init();
+    }
+
+    private void init(){
         paint = new Paint();
         paint.setTextSize(50);
-        textBounds = new Rect();
-        paint.getTextBounds(text, 0, text.length(), textBounds);
     }
 
     protected void draw(Canvas can) {
         paint.setColor(isHolding ? Color.GREEN : Color.BLUE);
-        can.drawRect(x, y, x + BUTTON_WIDTH, y + BUTTON_HEIGHT, paint);
+        can.drawRect(x, y, x + width, y + height, paint);
 
         paint.setColor(Color.WHITE);
 
-        int cx = x + ((BUTTON_WIDTH - textBounds.width()) / 2);
-        int cy = y + (BUTTON_HEIGHT + textBounds.height()) / 2 - 5;
-        can.drawText(text, cx, cy, paint);
+        Render.drawCenterText(can, paint, x + (width / 2), y + (height / 2), text);
     }
 
     protected void handleInput(MotionEvent event, Menu menu){

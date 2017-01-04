@@ -1,14 +1,8 @@
 package com.vivifile.handgame.Gui;
 
 import android.graphics.Canvas;
-import android.util.Log;
-
 import com.vivifile.handgame.GameLoop;
-import com.vivifile.handgame.Gui.Button;
-import com.vivifile.handgame.Gui.Menu;
-import com.vivifile.handgame.RenderView;
 
-import java.net.HttpRetryException;
 
 /**
  * Created by alex on 1/1/17.
