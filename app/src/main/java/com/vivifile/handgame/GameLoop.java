@@ -41,7 +41,6 @@ public class GameLoop extends Thread {
         menus.clear();
         menus.push(inGameMenu);
         game = new Game(this);
-        game.start();
     }
 
     @Override

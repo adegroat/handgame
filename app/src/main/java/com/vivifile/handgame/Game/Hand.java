@@ -1,7 +1,6 @@
 package com.vivifile.handgame.Game;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -18,37 +17,55 @@ import com.vivifile.handgame.RenderView;
 
 public class Hand {
 
-    public enum HandType {
-        LEFT,
-        RIGHT
+    public static final int RED_HAND = R.drawable.red_hand;
+    public static final int GREEN_HAND = R.drawable.green_hand;
+    public static final int BLUE_HAND = R.drawable.blue_hand;
+    public static final int YELLOW_HAND = R.drawable.yellow_hand;
+
+    private int handColor;
+    private boolean isRightHand;
+    private boolean isComputer;
+    private Bitmap handBitmap;
+
+    public Hand(int handColor, boolean isRightHand, Context context){
+        this.handColor = handColor;
+        this.isRightHand = isRightHand;
+        isComputer = true;
+        loadBitmaps(context);
     }
 
-    public enum HandColor {
-        RED,
-        GREEN,
-        BLUE,
-        YELLOW
+    private void loadBitmaps(Context context){
+        handBitmap = BitmapFactory.decodeResource(context.getResources(), handColor);
+
+        if(!isRightHand){
+            Matrix flip = new Matrix();
+            flip.preScale(-1.0f, 1.0f);
+            handBitmap = Bitmap.createBitmap(handBitmap, 0, 0, handBitmap.getWidth(), handBitmap.getHeight(), flip, false);
+        }
     }
 
-    protected Bitmap redHandLeft, redHandRight;
+    public void draw(Canvas can, float x, float y, float rotAngle) {
+        can.rotate(rotAngle, x, y);
+        can.drawBitmap(handBitmap, x - (handBitmap.getWidth() / 2), y - (handBitmap.getHeight() / 2), null);
+        can.rotate(-rotAngle, x, y);
+    }
 
-    private Bitmap leftHand, rightHand;
+    public void setIsComputer(boolean isComputer) {
+        this.isComputer = isComputer;
+    }
 
-    private HandType handType;
-    private HandColor color;
+    public int getHeight(){
+        return handBitmap.getHeight();
+    }
 
-    public Hand(HandType handType, Context context){
-        this.handType = handType;
+    public Bitmap getHandBitmap() {
+        return handBitmap;
+    }
+
+    public Bitmap getFlippedHandBitmap(){
         Matrix flip = new Matrix();
         flip.preScale(-1.0f, 1.0f);
-        redHandRight = BitmapFactory.decodeResource(context.getResources(), R.drawable.red_hand);
-        redHandLeft = Bitmap.createBitmap(redHandRight, 0, 0, redHandRight.getWidth(), redHandRight.getHeight(), flip, false);
-    }
-
-    public void draw(Canvas can) {
-        int width = RenderView.WIDTH / 2;
-        can.drawBitmap(redHandLeft, (width - redHandLeft.getWidth()) / 2, RenderView.WIDTH + 200, null);
-        can.drawBitmap(redHandRight, width + ((width - redHandRight.getWidth()) / 2), RenderView.WIDTH + 200, null);
+        return Bitmap.createBitmap(handBitmap, 0, 0, handBitmap.getWidth(), handBitmap.getHeight(), flip, false);
 
     }
 }
