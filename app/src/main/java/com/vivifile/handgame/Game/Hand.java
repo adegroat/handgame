@@ -25,7 +25,7 @@ public class Hand {
 
     private int handColor;
     private boolean isRightHand;
-    private boolean isComputer;
+    private boolean isOut;
     private Bitmap handBitmap, handBitmapCopy;
     private boolean isTapping, isDoubleTap;
     private long tapStart;
@@ -33,7 +33,7 @@ public class Hand {
     public Hand(int handColor, boolean isRightHand, Context context){
         this.handColor = handColor;
         this.isRightHand = isRightHand;
-        isComputer = true;
+        isOut = false;
         isTapping = false;
         loadBitmaps(context);
     }
@@ -50,20 +50,25 @@ public class Hand {
     }
 
     public void draw(Canvas can, float x, float y, float rotAngle) {
+        if(isOut) return;
+
         can.rotate(rotAngle, x, y);
         can.drawBitmap(handBitmap, x - (handBitmap.getWidth() / 2), y - (handBitmap.getHeight() / 2), null);
         can.rotate(-rotAngle, x, y);
     }
 
     public void tap(boolean isDoubleTap){
+        if(isOut) return;
         tapStart = System.currentTimeMillis();
         this.isDoubleTap = isDoubleTap;
         isTapping = true;
     }
 
     public void update(float delta) {
+        if(isOut) return;
+
         if(isTapping) {
-            Bitmap scaledHand = Bitmap.createScaledBitmap(handBitmapCopy, handBitmapCopy.getWidth() + 60, handBitmapCopy.getHeight() + 60, false);
+            Bitmap scaledHand = Bitmap.createScaledBitmap(handBitmapCopy, handBitmapCopy.getWidth() + 80, handBitmapCopy.getHeight() + 80, false);
             handBitmap = scaledHand;
 
             if(System.currentTimeMillis() - tapStart > 300) {
@@ -75,8 +80,12 @@ public class Hand {
         }
     }
 
-    public void setIsComputer(boolean isComputer) {
-        this.isComputer = isComputer;
+    public void setOut(boolean isOut) {
+        this.isOut = isOut;
+    }
+
+    public boolean isOut(){
+        return isOut;
     }
 
     public int getHeight(){
