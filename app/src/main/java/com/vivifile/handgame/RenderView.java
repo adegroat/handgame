@@ -49,7 +49,6 @@ public class RenderView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        gameLoop.onTouchEvent(event);
         return gameLoop.onTouchEvent(event);
     }
 
