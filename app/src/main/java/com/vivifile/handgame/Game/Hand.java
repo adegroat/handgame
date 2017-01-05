@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.provider.Settings;
 import android.util.Log;
 
 import com.vivifile.handgame.R;
@@ -73,10 +74,21 @@ public class Hand {
             Bitmap scaledHand = Bitmap.createScaledBitmap(handBitmapCopy, handBitmapCopy.getWidth() + 80, handBitmapCopy.getHeight() + 80, false);
             handBitmap = scaledHand;
 
-            if(System.currentTimeMillis() - tapStart > 300) {
+            long dt = System.currentTimeMillis() - tapStart;
+
+            if(dt > 300) {
                 handBitmap = handBitmapCopy;
-                isTapping = false;
-                if(isDoubleTap) tap(false);
+
+                if(isDoubleTap){
+                    if(dt > 450) {
+                        handBitmap = scaledHand;
+                        if(dt > 600) {
+                            handBitmap = handBitmapCopy;
+                            isTapping = false;
+                            isDoubleTap = false;
+                        }
+                    }
+                } else isTapping = false;
             }
 
         }

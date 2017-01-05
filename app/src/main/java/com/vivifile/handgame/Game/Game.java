@@ -4,9 +4,12 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.provider.Settings;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import com.vivifile.handgame.GameLoop;
+import com.vivifile.handgame.Gui.GameOverMenu;
 import com.vivifile.handgame.Gui.PauseMenu;
 import com.vivifile.handgame.Render;
 
@@ -23,7 +26,7 @@ public class Game {
     private boolean gameStarted = false;
     private Paint paint;
     private int countdownTime = 3;
-    private long prevTime;
+    private long prevTime, startTime;
 
     public Game(GameLoop gl) {
         this.gl = gl;
@@ -45,13 +48,22 @@ public class Game {
 
     public void update(float spf) {
         if(isPaused) return;
-        if(gameStarted)table.update(spf);
+        if(gameStarted) table.update(spf);
 
-        if(System.currentTimeMillis() - prevTime > 1000) {
+        if(System.currentTimeMillis() - prevTime > 1000 && !gameStarted) {
             countdownTime--;
-            if(countdownTime <= 0) gameStarted = true;
+            if(countdownTime <= 0) {
+                gameStarted = true;
+                startTime = System.currentTimeMillis();
+            }
             prevTime = System.currentTimeMillis();
         }
+    }
+
+    public void gameOver(){
+        double playTime = (System.currentTimeMillis() - startTime) / 1000.0;
+        gl.menus.push(new GameOverMenu(gl, playTime));
+        gl.endGame();
     }
 
     public boolean onTouchEvent(MotionEvent event) {

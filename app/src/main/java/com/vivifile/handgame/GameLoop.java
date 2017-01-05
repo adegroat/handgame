@@ -43,6 +43,10 @@ public class GameLoop extends Thread {
         game = new Game(this);
     }
 
+    public void endGame(){
+        game = null;
+    }
+
     @Override
     public void run(){
 

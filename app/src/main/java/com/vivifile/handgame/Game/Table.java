@@ -19,7 +19,7 @@ import java.util.Random;
 public class Table {
 
     public static final int TABLE_RADIUS = RenderView.WIDTH / 2;
-    public static final int PLAYER_TURN_TIME = 1000;
+    public static final int PLAYER_TURN_TIME = 800;
     public static final int COMPUTER_TURN_TIME = 600;
 
     private Game game;
@@ -29,8 +29,8 @@ public class Table {
     private Player player;
     private boolean clockwise = true;
     private Paint paint;
-    private long lastTapTime;
-    private int turnTimeLimit = COMPUTER_TURN_TIME;
+    private long lastTapTime, turnTimeLimit;
+    private boolean didTap = false;
 
     public Table(Game game, int numPlayers){
         this.game = game;
@@ -48,6 +48,7 @@ public class Table {
         player = new Player(hands[0], hands[3]);
         currentTurn = 4;
         paint = new Paint();
+        lastTapTime = System.currentTimeMillis() + 3000;
     }
 
     public void draw(Canvas can) {
@@ -69,31 +70,31 @@ public class Table {
     public void update(float delta){
         for(Hand hand : hands) hand.update(delta);
 
+        if(hands[player.getPlayerLeft()].isOut() && hands[player.getPlayerRight()].isOut()) {
+            game.gameOver();
+        }
+
+        boolean shouldDoubleTap = new Random().nextInt(101) > 75; // 25% chance of computer double tapping
+        if(isPlayerTurn()) {
+            if(player.getTapCount() >= 2){
+                player.resetTapCount();
+                nextTurn();
+            }
+        }
+        else tap(shouldDoubleTap);
+
+        turnTimeLimit = isPlayerTurn() ? PLAYER_TURN_TIME : COMPUTER_TURN_TIME;
+        if(System.currentTimeMillis() - lastTapTime > turnTimeLimit) {
+            if(isPlayerTurn() && player.getTapCount() == 0) {
+                hands[currentTurn].setOut(true);
+            }
+            player.resetTapCount();
+            nextTurn();
+        }
+
         if(currentTurn >= 2 * numPlayers) currentTurn = 0;
         if(currentTurn < 0) currentTurn = 2 * numPlayers - 1;
-
-        if(hands[currentTurn].isOut()) tap(false, false);
-        turnTimeLimit = isPlayerTurn() ? PLAYER_TURN_TIME : COMPUTER_TURN_TIME;
-
-
-        long dt = System.currentTimeMillis() - lastTapTime;
-        if(dt > turnTimeLimit) {
-            if(isPlayerTurn()) {
-                if(player.getTapCount() > 0) {
-                    tap(player.getTapCount() == 2 ? true : false, false);
-                    player.resetTapCount();
-                    return;
-                }
-
-                hands[currentTurn].setOut(true);
-                player.resetTapCount();
-                tap(false, false);
-                return;
-            }
-
-            boolean shouldDoubleTap = new Random().nextInt(101) > 75;
-            tap(shouldDoubleTap, true);
-        }
+        if(hands[currentTurn].isOut()) nextTurn();
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -108,12 +109,14 @@ public class Table {
                 boolean leftTap = x < RenderView.WIDTH / 2 && currentTurn == player.getPlayerLeft();
                 boolean rightTap = x > RenderView.WIDTH / 2 && currentTurn == player.getPlayerRight();
                 boolean validTap = leftTap || rightTap;
-                if(!validTap) {
+
+                if(validTap) {
+                    player.incTapCount();
+                    tap(false);
+                } else {
                     int deadHand = x > RenderView.WIDTH / 2 ? player.getPlayerRight() : player.getPlayerLeft();
                     hands[deadHand].setOut(true);
                 }
-                player.incTapCount();
-                hands[currentTurn].tap(false);
             }
             break;
         }
@@ -121,15 +124,25 @@ public class Table {
         return true;
     }
 
-    private void tap(boolean isDoubleTap, boolean shouldAnimate){
+    private void tap(boolean isDoubleTap){
+        if(didTap && !isPlayerTurn()) return;
+
         if(currentTurn >= 2 * numPlayers) currentTurn = 0;
         if(currentTurn < 0) currentTurn = 2 * numPlayers - 1;
 
+        didTap = true;
+
+        boolean shouldDoubleTap = isDoubleTap || player.getTapCount() >= 2;
+
+        if(shouldDoubleTap) clockwise = !clockwise;
+
+        hands[currentTurn].tap(isDoubleTap);
+    }
+
+    private void nextTurn(){
         lastTapTime = System.currentTimeMillis();
 
-        if(isDoubleTap) clockwise = !clockwise;
-
-        if(shouldAnimate) hands[currentTurn].tap(isDoubleTap);
+        didTap = false;
 
         if(clockwise) {
             currentTurn++;
