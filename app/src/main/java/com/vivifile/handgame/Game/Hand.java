@@ -62,7 +62,7 @@ public class Hand {
 
     public void tap(boolean isDoubleTap){
         if(isOut) return;
-        tapStart = System.currentTimeMillis();
+        tapStart = Game.getTime();
         this.isDoubleTap = isDoubleTap;
         isTapping = true;
     }
@@ -74,7 +74,7 @@ public class Hand {
             Bitmap scaledHand = Bitmap.createScaledBitmap(handBitmapCopy, handBitmapCopy.getWidth() + 80, handBitmapCopy.getHeight() + 80, false);
             handBitmap = scaledHand;
 
-            long dt = System.currentTimeMillis() - tapStart;
+            long dt = Game.getTime() - tapStart;
 
             if(dt > 300) {
                 handBitmap = handBitmapCopy;
@@ -96,11 +96,15 @@ public class Hand {
 
     public void setOut(boolean isOut) {
         this.isOut = isOut;
-        outTime = System.currentTimeMillis();
+        outTime = Game.getTime();
     }
 
     public boolean isOut(){
         return isOut;
+    }
+
+    public int getWidth(){
+        return handBitmap.getWidth();
     }
 
     public int getHeight(){

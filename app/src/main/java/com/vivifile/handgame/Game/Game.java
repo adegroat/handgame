@@ -19,10 +19,12 @@ import com.vivifile.handgame.Render;
 
 public class Game {
 
+    private static boolean isPaused = false;
+    private static long pauseTime = 0;
+    private static long resumeTime = 0;
 
     private GameLoop gl;
     private Table table;
-    private boolean isPaused = false;
     private boolean gameStarted = false;
     private Paint paint;
     private int countdownTime = 3;
@@ -50,18 +52,18 @@ public class Game {
         if(isPaused) return;
         if(gameStarted) table.update(spf);
 
-        if(System.currentTimeMillis() - prevTime > 1000 && !gameStarted) {
+        if(getTime() - prevTime > 1000 && !gameStarted) {
             countdownTime--;
             if(countdownTime <= 0) {
                 gameStarted = true;
-                startTime = System.currentTimeMillis();
+                startTime = getTime();
             }
-            prevTime = System.currentTimeMillis();
+            prevTime = getTime();
         }
     }
 
     public void gameOver(){
-        double playTime = (System.currentTimeMillis() - startTime) / 1000.0;
+        double playTime = (getTime() - startTime) / 1000.0;
         gl.menus.push(new GameOverMenu(gl, playTime));
         gl.endGame();
     }
@@ -73,15 +75,21 @@ public class Game {
 
     public void pause(){
         isPaused = true;
+        pauseTime = System.currentTimeMillis();
         gl.menus.push(new PauseMenu(gl));
     }
 
     public void resume(){
         isPaused = false;
+        resumeTime = System.currentTimeMillis();
         gl.menus.pop();
     }
 
     public Context getContext(){
         return gl.getContext();
+    }
+
+    public static long getTime(){
+        return isPaused ? pauseTime : System.currentTimeMillis() - (resumeTime - pauseTime);
     }
 }

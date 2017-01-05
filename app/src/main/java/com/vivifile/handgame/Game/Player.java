@@ -10,11 +10,10 @@ import com.vivifile.handgame.RenderView;
 
 public class Player {
 
-    private long tapTime;
     private int playerLeft, playerRight;
-    private boolean leftHandDead, rightHandDead;
     private int tapCount;
     private Hand leftHand, rightHand;
+    private float leftHandX, leftHandY, rightHandX, rightHandY;
 
     public Player(Hand rightHand, Hand leftHand){
         this.rightHand = rightHand;
@@ -22,14 +21,16 @@ public class Player {
         playerRight = 0;
         playerLeft = 3;
         tapCount = 0;
-        leftHandDead = false;
-        rightHandDead = false;
+        float width = RenderView.WIDTH / 2;
+        leftHandX =(width - leftHand.getWidth()) / 2;
+        leftHandY = 2 * Table.TABLE_RADIUS + 100;
+        rightHandX = width + ((width - rightHand.getWidth()) / 2);
+        rightHandY = leftHandY;
     }
 
     public void drawHands(Canvas can) {
-        float width = RenderView.WIDTH / 2;
-        can.drawBitmap(leftHand.getHandBitmap(), (width - leftHand.getHandBitmap().getWidth()) / 2, 2 * Table.TABLE_RADIUS + 100, null);
-        can.drawBitmap(rightHand.getHandBitmap(), width + ((width - rightHand.getHandBitmap().getWidth()) / 2), 2 * Table.TABLE_RADIUS + 100, null);
+        can.drawBitmap(leftHand.getHandBitmap(), leftHandX, leftHandY, null);
+        can.drawBitmap(rightHand.getHandBitmap(), rightHandX, rightHandY, null);
     }
 
     public int getPlayerLeft(){
@@ -52,11 +53,11 @@ public class Player {
         tapCount++;
     }
 
-    public void setTapTime(){
-        tapTime = System.currentTimeMillis();
+    public boolean isCollidedLeft(float x, float y) {
+        return x >= leftHandX && x <= leftHandX + leftHand.getWidth() && y >= leftHandY && y <= leftHandY + leftHand.getHeight();
     }
 
-    public long lastTapTime(){
-        return tapTime;
+    public boolean isCollidedRight(float x, float y) {
+        return x >= rightHandX && x <= rightHandX + rightHand.getWidth() && y >= rightHandY && y <= rightHandY + rightHand.getHeight();
     }
 }
