@@ -72,20 +72,27 @@ public class Table {
         if(currentTurn >= 2 * numPlayers) currentTurn = 0;
         if(currentTurn < 0) currentTurn = 2 * numPlayers - 1;
 
-        if(hands[currentTurn].isOut()) tap(false);
+        if(hands[currentTurn].isOut()) tap(false, false);
         turnTimeLimit = isPlayerTurn() ? PLAYER_TURN_TIME : COMPUTER_TURN_TIME;
 
 
         long dt = System.currentTimeMillis() - lastTapTime;
         if(dt > turnTimeLimit) {
             if(isPlayerTurn()) {
+                if(player.getTapCount() > 0) {
+                    tap(player.getTapCount() == 2 ? true : false, false);
+                    player.resetTapCount();
+                    return;
+                }
+
                 hands[currentTurn].setOut(true);
-                tap(false);
+                player.resetTapCount();
+                tap(false, false);
                 return;
             }
 
             boolean shouldDoubleTap = new Random().nextInt(101) > 75;
-            tap(shouldDoubleTap);
+            tap(shouldDoubleTap, true);
         }
     }
 
@@ -105,8 +112,8 @@ public class Table {
                     int deadHand = x > RenderView.WIDTH / 2 ? player.getPlayerRight() : player.getPlayerLeft();
                     hands[deadHand].setOut(true);
                 }
-
-                tap(false);
+                player.incTapCount();
+                hands[currentTurn].tap(false);
             }
             break;
         }
@@ -114,7 +121,7 @@ public class Table {
         return true;
     }
 
-    private void tap(boolean isDoubleTap){
+    private void tap(boolean isDoubleTap, boolean shouldAnimate){
         if(currentTurn >= 2 * numPlayers) currentTurn = 0;
         if(currentTurn < 0) currentTurn = 2 * numPlayers - 1;
 
@@ -122,7 +129,7 @@ public class Table {
 
         if(isDoubleTap) clockwise = !clockwise;
 
-        hands[currentTurn].tap(isDoubleTap);
+        if(shouldAnimate) hands[currentTurn].tap(isDoubleTap);
 
         if(clockwise) {
             currentTurn++;
@@ -130,6 +137,7 @@ public class Table {
         }
         currentTurn--;
     }
+
 
     private boolean isPlayerTurn(){
         return currentTurn == player.getPlayerLeft() || currentTurn == player.getPlayerRight();

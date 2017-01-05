@@ -10,7 +10,7 @@ import com.vivifile.handgame.RenderView;
 
 public class Player {
 
-    private long playerTapStart;
+    private long tapTime;
     private int playerLeft, playerRight;
     private boolean leftHandDead, rightHandDead;
     private int tapCount;
@@ -40,11 +40,23 @@ public class Player {
         return playerRight;
     }
 
+    public void resetTapCount(){
+        tapCount = 0;
+    }
+
     public int getTapCount(){
         return tapCount;
     }
 
     public void incTapCount(){
         tapCount++;
+    }
+
+    public void setTapTime(){
+        tapTime = System.currentTimeMillis();
+    }
+
+    public long lastTapTime(){
+        return tapTime;
     }
 }
