@@ -18,6 +18,7 @@ public class InGameMenu extends Menu {
     @Override
     protected void addElements(){
         addButton(new Button(0, 50, RenderView.HEIGHT - 200, Button.BUTTON_HEIGHT, Button.BUTTON_HEIGHT, "| |"));
+        addButton(new Button(1, Button.BUTTON_HEIGHT + 100, RenderView.HEIGHT - 200, "Restart"));
     }
 
     @Override
@@ -27,6 +28,13 @@ public class InGameMenu extends Menu {
 
     @Override
     protected void onClick(Button b) {
-        if(b.getId() == 0) gl.getGame().pause();
+        switch(b.getId()) {
+            case 0:
+                gl.getGame().pause();
+                break;
+            case 1:
+                gl.startNewGame();
+                break;
+        }
     }
 }

@@ -19,16 +19,18 @@ import java.util.Random;
 public class Table {
 
     public static final int TABLE_RADIUS = RenderView.WIDTH / 2;
-    public static final int TURN_TIME_LIMIT = 600; // Max numberof miliseconds that a turn can take
-    public static final int DOUBLE_TAP_TIME_LIMIT = 300;
+    public static final int PLAYER_TURN_TIME = 1000;
+    public static final int COMPUTER_TURN_TIME = 600;
 
     private Game game;
     private Hand[] hands;
     private int numPlayers;
-    private int currentTurn, playerTurn;
+    private int currentTurn;
+    private Player player;
     private boolean clockwise = true;
     private Paint paint;
-    private long lastTapTime, playerTapStart;
+    private long lastTapTime;
+    private int turnTimeLimit = COMPUTER_TURN_TIME;
 
     public Table(Game game, int numPlayers){
         this.game = game;
@@ -43,8 +45,8 @@ public class Table {
         hands[5] = new Hand(Hand.YELLOW_HAND, false, context);
         hands[6] = new Hand(Hand.GREEN_HAND, true, context);
         hands[7] = new Hand(Hand.BLUE_HAND, false, context);
+        player = new Player(hands[0], hands[3]);
         currentTurn = 4;
-        playerTurn = 0;
         paint = new Paint();
     }
 
@@ -60,6 +62,8 @@ public class Table {
             float handAngle = (i * 45) - 90;
             hands[i].draw(can, TABLE_RADIUS + x, TABLE_RADIUS + y, handAngle);
         }
+
+        player.drawHands(can);
     }
 
     public void update(float delta){
@@ -69,16 +73,18 @@ public class Table {
         if(currentTurn < 0) currentTurn = 2 * numPlayers - 1;
 
         if(hands[currentTurn].isOut()) tap(false);
+        turnTimeLimit = isPlayerTurn() ? PLAYER_TURN_TIME : COMPUTER_TURN_TIME;
+
 
         long dt = System.currentTimeMillis() - lastTapTime;
-        if(dt > TURN_TIME_LIMIT) {
+        if(dt > turnTimeLimit) {
             if(isPlayerTurn()) {
                 hands[currentTurn].setOut(true);
                 tap(false);
                 return;
             }
 
-            boolean shouldDoubleTap = new Random().nextInt(101) > 80;
+            boolean shouldDoubleTap = new Random().nextInt(101) > 75;
             tap(shouldDoubleTap);
         }
     }
@@ -92,11 +98,13 @@ public class Table {
                 break;
 
             case MotionEvent.ACTION_UP: {
-//                if (isPlayerTurn()) playerTapStart = System.currentTimeMillis();
-//                if (System.currentTimeMillis() - playerTapStart < DOUBLE_TAP_TIME_LIMIT) {
-//                    tap(true);
-//                    playerTapStart = System.currentTimeMillis();
-//                } else tap(false);
+                boolean leftTap = x < RenderView.WIDTH / 2 && currentTurn == player.getPlayerLeft();
+                boolean rightTap = x > RenderView.WIDTH / 2 && currentTurn == player.getPlayerRight();
+                boolean validTap = leftTap || rightTap;
+                if(!validTap) {
+                    int deadHand = x > RenderView.WIDTH / 2 ? player.getPlayerRight() : player.getPlayerLeft();
+                    hands[deadHand].setOut(true);
+                }
 
                 tap(false);
             }
@@ -116,14 +124,14 @@ public class Table {
 
         hands[currentTurn].tap(isDoubleTap);
 
-//        if(clockwise) {
-//            currentTurn++;
-//            return;
-//        }
-//        currentTurn--;
+        if(clockwise) {
+            currentTurn++;
+            return;
+        }
+        currentTurn--;
     }
 
     private boolean isPlayerTurn(){
-        return currentTurn == 0 || currentTurn == 3;
+        return currentTurn == player.getPlayerLeft() || currentTurn == player.getPlayerRight();
     }
 }

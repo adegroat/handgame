@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.util.Log;
 
 import com.vivifile.handgame.R;
 import com.vivifile.handgame.Render;
@@ -28,7 +29,7 @@ public class Hand {
     private boolean isOut;
     private Bitmap handBitmap, handBitmapCopy;
     private boolean isTapping, isDoubleTap;
-    private long tapStart;
+    private long tapStart, outTime;
 
     public Hand(int handColor, boolean isRightHand, Context context){
         this.handColor = handColor;
@@ -50,11 +51,12 @@ public class Hand {
     }
 
     public void draw(Canvas can, float x, float y, float rotAngle) {
-        if(isOut) return;
 
-        can.rotate(rotAngle, x, y);
-        can.drawBitmap(handBitmap, x - (handBitmap.getWidth() / 2), y - (handBitmap.getHeight() / 2), null);
-        can.rotate(-rotAngle, x, y);
+        if(!isOut) {
+            can.rotate(rotAngle, x, y);
+            can.drawBitmap(handBitmap, x - (handBitmap.getWidth() / 2), y - (handBitmap.getHeight() / 2), null);
+            can.rotate(-rotAngle, x, y);
+        }
     }
 
     public void tap(boolean isDoubleTap){
@@ -82,6 +84,7 @@ public class Hand {
 
     public void setOut(boolean isOut) {
         this.isOut = isOut;
+        outTime = System.currentTimeMillis();
     }
 
     public boolean isOut(){

@@ -1,20 +1,14 @@
 package com.vivifile.handgame.Game;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import com.vivifile.handgame.GameLoop;
 import com.vivifile.handgame.Gui.PauseMenu;
 import com.vivifile.handgame.Render;
-import com.vivifile.handgame.RenderView;
-
-import java.util.Random;
 
 /**
  * Created by alex on 1/2/17.
