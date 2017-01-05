@@ -57,7 +57,7 @@ public class Table {
 
         for(int i = 0; i < hands.length; i++) {
             int radius = TABLE_RADIUS - (hands[i].getHeight() / 2) - 40;
-            double angleRad = i * (Math.PI / 4);
+            double angleRad = i * (Math.PI / numPlayers);
             float x = radius * (float) Math.cos(angleRad);
             float y = radius * (float) Math.sin(angleRad);
             float handAngle = (i * 45) - 90;
