@@ -60,6 +60,7 @@ public class GameLoop extends Thread {
             fps = (int)(1 / secondsPerFrame);
 
             canvas = surfaceHolder.lockCanvas();
+            if(canvas == null) return;
             draw(canvas);
             surfaceHolder.unlockCanvasAndPost(canvas);
             if(game != null) {

@@ -18,7 +18,6 @@ public class InGameMenu extends Menu {
     @Override
     protected void addElements(){
         addButton(new Button(0, 50, RenderView.HEIGHT - 200, Button.BUTTON_HEIGHT, Button.BUTTON_HEIGHT, "| |"));
-        addButton(new Button(1, Button.BUTTON_HEIGHT + 100, RenderView.HEIGHT - 200, "Restart"));
     }
 
     @Override

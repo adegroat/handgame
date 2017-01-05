@@ -16,9 +16,11 @@ import com.vivifile.handgame.RenderView;
 public class Button {
 
     public static final int BUTTON_WIDTH = 400;
-    public static final int BUTTON_HEIGHT = 150;
+    public static final int BUTTON_FILL_WIDTH = RenderView.WIDTH - (int)(RenderView.WIDTH * .25);
+    public static final int BUTTON_HEIGHT = 120;
 
     public static final int BUTTON_CENTER_X = (RenderView.WIDTH - BUTTON_WIDTH) / 2;
+    public static final int BUTTON_FILL_CENTER_X = (RenderView.WIDTH - BUTTON_FILL_WIDTH) / 2;
     public static final int BUTTON_CENTER_Y = (RenderView.HEIGHT - BUTTON_HEIGHT) / 2;
 
     private int id;
@@ -31,7 +33,7 @@ public class Button {
         this.id = id;
         this.x = x;
         this.y = y;
-        this.width = BUTTON_WIDTH;
+        this.width = BUTTON_FILL_WIDTH;
         this.height = BUTTON_HEIGHT;
         this.text = text;
 
@@ -67,7 +69,7 @@ public class Button {
         int tapX = (int)event.getRawX();
         int tapY = (int)event.getRawY();
 
-        boolean inBounds = tapX >= x && tapX <= x + BUTTON_WIDTH && tapY >= y && tapY <= y + BUTTON_HEIGHT;
+        boolean inBounds = tapX >= x && tapX <= x + width && tapY >= y && tapY <= y + height;
 
         switch(event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:

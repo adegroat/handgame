@@ -21,7 +21,7 @@ public class HelpMenu extends Menu {
 
     @Override
     protected void addElements(){
-        addButton(new Button(0, Button.BUTTON_CENTER_X, RenderView.HEIGHT - 300, "Back"));
+        addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, RenderView.HEIGHT - 300, "Back"));
     }
 
     @Override

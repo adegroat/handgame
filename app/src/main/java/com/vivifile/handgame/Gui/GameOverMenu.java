@@ -24,7 +24,7 @@ public class GameOverMenu extends Menu {
 
     @Override
     protected void addElements(){
-        addButton(new Button(0, Button.BUTTON_CENTER_X, Button.BUTTON_CENTER_Y + 400, "Play Again"));
+        addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 400, "Play Again"));
     }
 
     @Override

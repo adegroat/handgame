@@ -19,7 +19,7 @@ public class PauseMenu extends Menu {
 
     @Override
     protected void addElements(){
-        addButton(new Button(0, Button.BUTTON_CENTER_X, Button.BUTTON_CENTER_Y, "Resume Game"));
+        addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y, "Resume Game"));
     }
 
     @Override

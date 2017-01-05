@@ -16,8 +16,8 @@ public class MainMenu extends Menu {
 
     @Override
     protected void addElements(){
-        addButton(new Button(0, Button.BUTTON_CENTER_X, Button.BUTTON_CENTER_Y - 100, "Play"));
-        addButton(new Button(1, Button.BUTTON_CENTER_X, Button.BUTTON_CENTER_Y + 100, "How To Play"));
+        addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y - 100, "Play"));
+        addButton(new Button(1, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 100, "How To Play"));
     }
 
     @Override
