@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -27,10 +28,14 @@ public class GameLoop extends Thread {
     public Stack<Menu> menus;
     private Game game;
     private Context context;
+    private MediaPlayer mediaPlayer;
 
     public GameLoop(SurfaceHolder surfaceHolder, Context context) {
         this.surfaceHolder = surfaceHolder;
         this.context = context;
+        mediaPlayer = MediaPlayer.create(context, R.raw.handgame_song2);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
         menus = new Stack<Menu>();
         menus.push(new MainMenu(this));
     }
@@ -105,6 +110,9 @@ public class GameLoop extends Thread {
 
     public void doStop(){
         isRunning = false;
+
+        mediaPlayer.release();
+        mediaPlayer = null;
 
         while(true){
             try {
