@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HandGame</string>
+    <string name="banner_ad_unit_id">TODO: AD UNIT ID</string>
 </resources>

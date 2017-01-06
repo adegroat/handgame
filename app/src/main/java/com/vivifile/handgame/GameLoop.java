@@ -25,7 +25,6 @@ public class GameLoop extends Thread {
     private Canvas canvas;
     private int fps;
     public Stack<Menu> menus;
-    private Menu inGameMenu;
     private Game game;
     private Context context;
 
@@ -33,13 +32,12 @@ public class GameLoop extends Thread {
         this.surfaceHolder = surfaceHolder;
         this.context = context;
         menus = new Stack<Menu>();
-        inGameMenu = new InGameMenu(this);
         menus.push(new MainMenu(this));
     }
 
     public void startNewGame(){
         menus.clear();
-        menus.push(inGameMenu);
+        menus.push(new InGameMenu(this));
         game = new Game(this);
     }
 

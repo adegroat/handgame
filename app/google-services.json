@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "650567956956",
+    "firebase_url": "https://handgame-39770.firebaseio.com",
+    "project_id": "handgame-39770",
+    "storage_bucket": "handgame-39770.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:650567956956:android:df68fda58b6ea9aa",
+        "android_client_info": {
+          "package_name": "com.vivifile.handgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "650567956956-3ql2ok5r1jk94vj5ls9eg4nl68ut9f0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vivifile.handgame",
+            "certificate_hash": "1D3D3BFB74E42222169901864A7BF8C07214CB5B"
+          }
+        },
+        {
+          "client_id": "650567956956-nka23h8phafurua1gmntg3sue597f29p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD1pBTIs_ec431GGOOhwmuvgUYwhIFBxQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "650567956956-nka23h8phafurua1gmntg3sue597f29p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

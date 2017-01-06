@@ -17,7 +17,7 @@ public class InGameMenu extends Menu {
 
     @Override
     protected void addElements(){
-        addButton(new Button(0, (RenderView.WIDTH - Button.BUTTON_HEIGHT) / 2, RenderView.HEIGHT - Button.BUTTON_HEIGHT, Button.BUTTON_HEIGHT, Button.BUTTON_HEIGHT, "| |"));
+        addButton(new Button(0, (RenderView.WIDTH - Button.BUTTON_HEIGHT) / 2, RenderView.HEIGHT - Button.BUTTON_HEIGHT - 50, Button.BUTTON_HEIGHT, Button.BUTTON_HEIGHT, "| |"));
     }
 
     @Override

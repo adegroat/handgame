@@ -86,7 +86,6 @@ public class Table {
         }
 
         turnTimeLimit = isPlayerTurn() ? PLAYER_TURN_TIME : COMPUTER_TURN_TIME;
-        Log.d("TAG", "update: " + (Game.getTime() - turnTimeLimit) + "\t\t" + Game.getTime());
         if(Game.getTime() - lastTapTime > turnTimeLimit) {
             if(isPlayerTurn() && player.getTapCount() == 0) {
                 hands[currentTurn].setOut(true);
