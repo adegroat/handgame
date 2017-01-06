@@ -25,7 +25,7 @@ public class PauseMenu extends Menu {
     @Override
     public void draw(Canvas can) {
         super.draw(can);
-        paint.setTextSize(70);
+        paint.setTextSize(100);
         paint.setColor(Color.WHITE);
         Render.drawCenterText(can, paint, CENTER_X, CENTER_X, "Paused");
     }

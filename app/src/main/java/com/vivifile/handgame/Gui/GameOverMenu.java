@@ -25,6 +25,7 @@ public class GameOverMenu extends Menu {
     @Override
     protected void addElements(){
         addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 400, "Play Again"));
+        addButton(new Button(1, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 550, "Main Menu"));
     }
 
     @Override
@@ -43,5 +44,6 @@ public class GameOverMenu extends Menu {
     @Override
     protected void onClick(Button b) {
         if(b.getId() == 0) gl.startNewGame();
+        if(b.getId() == 1) gl.menus.push(new MainMenu(gl));
     }
 }

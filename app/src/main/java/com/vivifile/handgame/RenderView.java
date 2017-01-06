@@ -33,6 +33,7 @@ public class RenderView extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Log.d(TAG, "surfaceCreated");
+        gameLoop = new GameLoop(surfaceHolder, getContext());
         gameLoop.doStart();
         HEIGHT = getHeight();
     }
@@ -53,11 +54,8 @@ public class RenderView extends SurfaceView implements SurfaceHolder.Callback {
         return gameLoop.onTouchEvent(event);
     }
 
-    public void start(){
-        gameLoop = new GameLoop(surfaceHolder, getContext());
-    }
-
     public void stop(){
         gameLoop.doStop();
+        gameLoop = null;
     }
 }

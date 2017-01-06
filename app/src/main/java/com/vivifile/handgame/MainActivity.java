@@ -42,8 +42,6 @@ public class MainActivity extends Activity {
         layout.addView(adView, adParams);
 
         setContentView(layout);
-        renderView.start();
-
     }
 
     @Override

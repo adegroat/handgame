@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 
 import com.vivifile.handgame.GameLoop;
+import com.vivifile.handgame.Render;
 import com.vivifile.handgame.RenderView;
 
 import java.util.ArrayList;
@@ -23,16 +24,19 @@ public class Menu {
     private List<Button> buttons;
     protected GameLoop gl;
     protected Paint paint;
+    private boolean drawOverlay;
 
     public Menu(GameLoop gl){
         this.gl = gl;
         paint = new Paint();
         paint.setTextSize(70);
+        drawOverlay = true;
         buttons = new ArrayList<Button>();
         addElements();
     }
 
     public void draw(Canvas can) {
+        if(drawOverlay) can.drawColor(Render.COLOR_BLUE);
         for(Button b : buttons) b.draw(can);
     }
 
@@ -40,6 +44,11 @@ public class Menu {
         for(Button b : buttons) {
             b.handleInput(event, this);
         }
+    }
+
+    public Menu setOverlay(boolean drawOverlay) {
+        this.drawOverlay = drawOverlay;
+        return this;
     }
 
     protected void addButton(Button b) {

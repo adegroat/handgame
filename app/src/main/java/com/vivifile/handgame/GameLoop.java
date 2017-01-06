@@ -21,7 +21,7 @@ import java.util.Stack;
 
 public class GameLoop extends Thread {
 
-    private boolean isRunning = false;
+    private volatile boolean isRunning = false;
     private SurfaceHolder surfaceHolder;
     private Canvas canvas;
     private int fps;
@@ -33,16 +33,13 @@ public class GameLoop extends Thread {
     public GameLoop(SurfaceHolder surfaceHolder, Context context) {
         this.surfaceHolder = surfaceHolder;
         this.context = context;
-        mediaPlayer = MediaPlayer.create(context, R.raw.handgame_song2);
-        mediaPlayer.setLooping(true);
-        mediaPlayer.start();
         menus = new Stack<Menu>();
         menus.push(new MainMenu(this));
     }
 
     public void startNewGame(){
         menus.clear();
-        menus.push(new InGameMenu(this));
+        menus.push(new InGameMenu(this).setOverlay(false));
         game = new Game(this);
     }
 
@@ -73,14 +70,7 @@ public class GameLoop extends Thread {
     }
 
     private void draw(Canvas can) {
-        can.drawColor(Color.BLACK);
-
-        Paint p = new Paint();
-        p.setColor(Color.RED);
-
-        p.setTextSize(25);
-        canvas.drawText(fps + "fps", 25, 25, p);
-
+        can.drawColor(Render.COLOR_BLUE);
 
         if(game != null){
            game.draw(can);
@@ -103,25 +93,28 @@ public class GameLoop extends Thread {
         return context;
     }
 
+    public void startMusic(){
+        if(mediaPlayer != null) return;
+
+        mediaPlayer = MediaPlayer.create(context, R.raw.handgame_song2);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
+    }
+
+    public void stopMusic(){
+        if(mediaPlayer == null) return;
+        mediaPlayer.release();
+    }
+
     public void doStart(){
         isRunning = true;
+        startMusic();
         this.start();
     }
 
     public void doStop(){
         isRunning = false;
-
-        mediaPlayer.release();
-        mediaPlayer = null;
-
-        while(true){
-            try {
-                this.join();
-                break;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+        stopMusic();
     }
 
 }

@@ -13,6 +13,8 @@ import android.graphics.Rect;
 
 public class Render {
 
+    public static final int COLOR_BLUE = 0xFF5FCCED;
+
     public static Bitmap flipBitmap(Bitmap bitmap) {
         Matrix flip = new Matrix();
         flip.preScale(-1.0f, 1.0f);
