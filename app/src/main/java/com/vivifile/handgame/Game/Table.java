@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.util.Log;
 import android.view.MotionEvent;
 
+import com.vivifile.handgame.R;
 import com.vivifile.handgame.Render;
 import com.vivifile.handgame.RenderView;
 
@@ -19,7 +21,7 @@ import java.util.Random;
 public class Table {
 
     public static final int TABLE_RADIUS = RenderView.WIDTH / 2;
-    public static final int PLAYER_TURN_TIME = 800;
+    public static final int PLAYER_TURN_TIME = 700;
     public static final int COMPUTER_TURN_TIME = 600;
 
     private Game game;
@@ -37,18 +39,19 @@ public class Table {
         this.numPlayers = numPlayers;
         hands = new Hand[numPlayers * 2];
         Context context = game.getContext();
-        hands[0] = new Hand(Hand.RED_HAND, true, context);
-        hands[1] = new Hand(Hand.GREEN_HAND, false, context);
+        hands[0] = new Hand(Hand.GREEN_HAND, true, context);
+        hands[1] = new Hand(Hand.RED_HAND, false, context);
         hands[2] = new Hand(Hand.YELLOW_HAND, true, context);
-        hands[3] = new Hand(Hand.RED_HAND, false, context);
-        hands[4] = new Hand(Hand.BLUE_HAND, true, context);
+        hands[3] = new Hand(Hand.GREEN_HAND, false, context);
+        hands[4] = new Hand(Hand.PURPLE_HAND, true, context);
         hands[5] = new Hand(Hand.YELLOW_HAND, false, context);
-        hands[6] = new Hand(Hand.GREEN_HAND, true, context);
-        hands[7] = new Hand(Hand.BLUE_HAND, false, context);
+        hands[6] = new Hand(Hand.RED_HAND, true, context);
+        hands[7] = new Hand(Hand.PURPLE_HAND, false, context);
         player = new Player(hands[0], hands[3]);
         currentTurn = 5;
         paint = new Paint();
         lastTapTime = Game.getTime() + 3000;
+
     }
 
     public void draw(Canvas can) {
@@ -74,23 +77,16 @@ public class Table {
             game.gameOver();
         }
 
-        if(isPlayerTurn()) {
-            if(player.getTapCount() >= 2){
-                player.resetTapCount();
-                nextTurn();
-            }
-        }
-        else {
+        if(!isPlayerTurn()) {
             boolean shouldDoubleTap = new Random().nextInt(101) > 75; // 25% chance of computer double tapping
-            tap(shouldDoubleTap);
+            tap(false);
         }
 
         turnTimeLimit = isPlayerTurn() ? PLAYER_TURN_TIME : COMPUTER_TURN_TIME;
         if(Game.getTime() - lastTapTime > turnTimeLimit) {
             if(isPlayerTurn() && player.getTapCount() == 0) {
                 hands[currentTurn].setOut(true);
-            }
-            player.resetTapCount();
+            } else player.resetTapCount();
             nextTurn();
         }
 

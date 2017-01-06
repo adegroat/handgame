@@ -7,6 +7,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
+import android.media.MediaPlayer;
 import android.provider.Settings;
 import android.util.Log;
 
@@ -22,7 +23,7 @@ public class Hand {
 
     public static final int RED_HAND = R.drawable.red_hand;
     public static final int GREEN_HAND = R.drawable.green_hand;
-    public static final int BLUE_HAND = R.drawable.blue_hand;
+    public static final int PURPLE_HAND = R.drawable.purple_hand;
     public static final int YELLOW_HAND = R.drawable.yellow_hand;
 
     private int handColor;
@@ -31,6 +32,7 @@ public class Hand {
     private Bitmap handBitmap, handBitmapCopy;
     private boolean isTapping, isDoubleTap;
     private long tapStart, outTime;
+    private MediaPlayer tapPlayer, doubleTapPlayer;
 
     public Hand(int handColor, boolean isRightHand, Context context){
         this.handColor = handColor;
@@ -38,6 +40,9 @@ public class Hand {
         isOut = false;
         isTapping = false;
         loadBitmaps(context);
+        tapPlayer = MediaPlayer.create(context, R.raw.tap);
+        doubleTapPlayer = MediaPlayer.create(context, R.raw.double_tap);
+
     }
 
     private void loadBitmaps(Context context){
@@ -76,14 +81,17 @@ public class Hand {
 
             long dt = Game.getTime() - tapStart;
 
-            if(dt > 300) {
+            if(dt > 200) {
                 handBitmap = handBitmapCopy;
+                if(!isDoubleTap) tapPlayer.start();
+                else doubleTapPlayer.start();
 
                 if(isDoubleTap){
-                    if(dt > 450) {
+                    if(dt > 350) {
                         handBitmap = scaledHand;
-                        if(dt > 600) {
+                        if(dt > 450) {
                             handBitmap = handBitmapCopy;
+                            //tapPlayer.start();
                             isTapping = false;
                             isDoubleTap = false;
                         }
