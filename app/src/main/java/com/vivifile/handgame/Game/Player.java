@@ -10,6 +10,8 @@ import com.vivifile.handgame.RenderView;
 
 public class Player {
 
+    public static final int TAP_PADDING = 25;
+
     private int playerLeft, playerRight;
     private int tapCount;
     private Hand leftHand, rightHand;
@@ -54,10 +56,10 @@ public class Player {
     }
 
     public boolean isCollidedLeft(float x, float y) {
-        return x >= leftHandX && x <= leftHandX + leftHand.getWidth() && y >= leftHandY && y <= leftHandY + leftHand.getHeight();
+        return x >= leftHandX - TAP_PADDING && x <= leftHandX + leftHand.getWidth() + TAP_PADDING && y >= leftHandY - TAP_PADDING && y <= leftHandY + leftHand.getHeight() + TAP_PADDING;
     }
 
     public boolean isCollidedRight(float x, float y) {
-        return x >= rightHandX && x <= rightHandX + rightHand.getWidth() && y >= rightHandY && y <= rightHandY + rightHand.getHeight();
+        return x >= rightHandX - TAP_PADDING && x <= rightHandX + rightHand.getWidth() + TAP_PADDING && y >= rightHandY - TAP_PADDING && y <= rightHandY + rightHand.getHeight() + TAP_PADDING;
     }
 }
