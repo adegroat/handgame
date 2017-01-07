@@ -51,6 +51,10 @@ public class Render {
                     offsetY += bounds.height() + 15;
                 }
             }
+
+            return;
         }
+        can.drawText(text, x, y, paint);
+
     }
 }

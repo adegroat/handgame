@@ -29,12 +29,12 @@ public class HelpMenu extends Menu {
         super.draw(can);
         paint.setColor(Color.WHITE);
         paint.setTextSize(70);
-        Render.drawCenterText(can, paint, CENTER_X, 300, "How To Play");
+        Render.drawCenterText(can, paint, CENTER_X, 200, "How To Play");
 
         paint.setTextSize(40);
-        can.drawText("Take turns tapping in a circle.", 70, 400, paint);
-        Render.drawSmartText(can, paint, 70, 470, "When its your turn, tap on the correct hand at the bottom of the screen.");
-        can.drawText("Double taps reverse the direction of the game.", 70, 600, paint);
+        Render.drawSmartText(can, paint, 70, 300, "Take turns tapping in a circle.");
+        Render.drawSmartText(can, paint, 70, 400, "When its your turn, tap on the correct hand at the bottom of the screen.");
+        Render.drawSmartText(can, paint, 70, 550, "Double taps reverse the direction of the game.");
     }
 
     @Override
