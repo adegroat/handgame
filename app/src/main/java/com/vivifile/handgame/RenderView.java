@@ -55,4 +55,16 @@ public class RenderView extends SurfaceView implements SurfaceHolder.Callback {
         gameLoop.doStop();
         gameLoop = null;
     }
+
+    public void onPause(){
+        if(gameLoop != null) {
+            gameLoop.pauseAll();
+        }
+    }
+
+    public void onResume(){
+        if(gameLoop != null){
+            gameLoop.resumeAll();
+        }
+    }
 }

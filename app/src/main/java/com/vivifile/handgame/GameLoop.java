@@ -123,12 +123,22 @@ public class GameLoop extends Thread {
 
     public void doStart(){
         isRunning = true;
-        if(settings.isMusicPlaying()) startMusic();
+        if(settings.isMusicEnabled()) startMusic();
         this.start();
     }
 
     public void doStop(){
         isRunning = false;
         stopMusic();
+    }
+
+    public void pauseAll(){
+        stopMusic();
+        if(game != null) game.pause();
+    }
+
+    public void resumeAll(){
+        if(settings.isMusicEnabled())
+            startMusic();
     }
 }

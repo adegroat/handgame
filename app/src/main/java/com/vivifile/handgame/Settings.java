@@ -19,7 +19,7 @@ public class Settings {
         prefs = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public boolean isMusicPlaying(){
+    public boolean isMusicEnabled(){
         return prefs.getBoolean(PREF_MUSIC, true);
     }
 

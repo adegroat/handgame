@@ -107,8 +107,11 @@ public class Table {
                 tap(player.getTapCount() >= 2);
                 return true;
             }
-            int deadHand = player.isCollidedLeft(x, y) ? player.getPlayerLeft() : player.getPlayerRight();
-            hands[deadHand].setOut(true);
+
+            if(player.isCollidedLeft(x, y) || player.isCollidedRight(x, y)){
+                int deadHand = player.isCollidedLeft(x, y) ? player.getPlayerLeft() : player.getPlayerRight();
+                hands[deadHand].setOut(true);
+            }
         }
 
         return true;

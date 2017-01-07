@@ -70,7 +70,7 @@ public class Game {
     }
 
     public boolean onTouchEvent(MotionEvent event) {
-        if(gameStarted) table.onTouchEvent(event);
+        if(gameStarted && !isPaused) table.onTouchEvent(event);
         return true;
     }
 

@@ -45,6 +45,18 @@ public class MainActivity extends Activity {
     }
 
     @Override
+    protected void onPause(){
+        super.onPause();
+        renderView.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        renderView.onResume();
+    }
+
+    @Override
     protected void onDestroy(){
         super.onDestroy();
         renderView.stop();
