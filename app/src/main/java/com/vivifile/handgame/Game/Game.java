@@ -24,7 +24,7 @@ public class Game {
 
     private GameLoop gl;
     private Table table;
-    private boolean gameStarted = false;
+    private boolean gameStarted;
     private Paint paint;
     private int countdownTime;
     private long prevTime, startTime;
@@ -32,6 +32,7 @@ public class Game {
     public Game(GameLoop gl) {
         this.gl = gl;
         table = new Table(this, 4);
+        gameStarted = false;
         paint = new Paint();
         prevTime = Game.getTime();
         countdownTime = 3;
