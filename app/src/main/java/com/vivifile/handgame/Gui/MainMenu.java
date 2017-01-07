@@ -26,9 +26,8 @@ public class MainMenu extends Menu {
         logo = BitmapFactory.decodeResource(gl.getContext().getResources(), R.drawable.logo);
 
         Matrix scale = new Matrix();
-        float scaleX = 0.9f * (float)RenderView.WIDTH / (float)logo.getWidth();
-        float scaleY = 1.9f * (float)logo.getHeight() / (float)RenderView.WIDTH;
-        scale.preScale(scaleX, scaleY);
+        float logoScale = 0.9f * (float)RenderView.WIDTH / (float)logo.getWidth();
+        scale.preScale(logoScale, logoScale);
         logo = Bitmap.createBitmap(logo, 0, 0, logo.getWidth(), logo.getHeight(), scale, false);
     }
 
