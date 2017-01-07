@@ -64,7 +64,7 @@ public class Game {
     }
 
     public void gameOver(){
-        double playTime = (getTime() - startTime) / 1000.0;
+        float playTime = (getTime() - startTime) / 1000.0f;
         gl.menus.push(new GameOverMenu(gl, playTime));
         gl.endGame();
     }

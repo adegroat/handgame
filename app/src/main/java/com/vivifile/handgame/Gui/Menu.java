@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import com.vivifile.handgame.GameLoop;
 import com.vivifile.handgame.Render;
 import com.vivifile.handgame.RenderView;
+import com.vivifile.handgame.Settings;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,13 @@ public class Menu {
 
     private List<Button> buttons;
     protected GameLoop gl;
+    protected Settings settings;
     protected Paint paint;
     private boolean drawOverlay;
 
     public Menu(GameLoop gl){
         this.gl = gl;
+        settings = gl.getSettings();
         paint = new Paint();
         paint.setTextSize(70);
         drawOverlay = true;

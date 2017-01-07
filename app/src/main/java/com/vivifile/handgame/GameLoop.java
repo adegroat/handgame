@@ -1,10 +1,12 @@
 package com.vivifile.handgame;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -30,10 +32,13 @@ public class GameLoop extends Thread {
     private Game game;
     private Context context;
     private MediaPlayer mediaPlayer;
+    private Settings settings;
 
     public GameLoop(SurfaceHolder surfaceHolder, Context context) {
         this.surfaceHolder = surfaceHolder;
         this.context = context;
+        settings = new Settings(context);
+
         menus = new Stack<Menu>();
         menus.push(new MainMenu(this));
     }
@@ -92,6 +97,10 @@ public class GameLoop extends Thread {
         return context;
     }
 
+    public Settings getSettings(){
+        return settings;
+    }
+
     public void startMusic(){
         if(mediaPlayer != null) return;
 
@@ -107,13 +116,19 @@ public class GameLoop extends Thread {
     }
 
     public void toggleMusic(){
-        if(mediaPlayer == null) startMusic();
-        else stopMusic();
+        if(mediaPlayer == null) {
+            startMusic();
+            settings.setMusicStatus(true);
+        }
+        else {
+            stopMusic();
+            settings.setMusicStatus(false);
+        }
     }
 
     public void doStart(){
         isRunning = true;
-        startMusic();
+        if(settings.isMusicPlaying()) startMusic();
         this.start();
     }
 
@@ -121,5 +136,4 @@ public class GameLoop extends Thread {
         isRunning = false;
         stopMusic();
     }
-
 }

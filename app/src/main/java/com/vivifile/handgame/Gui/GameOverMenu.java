@@ -15,11 +15,14 @@ import java.text.DecimalFormat;
 
 public class GameOverMenu extends Menu {
 
-    private double playTime;
+    private float playTime, prevBest;
 
-    public GameOverMenu(GameLoop gl, double playTime) {
+    public GameOverMenu(GameLoop gl, float playTime) {
         super(gl);
+        prevBest = settings.getHighScore();
         this.playTime = playTime;
+
+        settings.updateHighScore(playTime);
     }
 
     @Override
@@ -33,12 +36,27 @@ public class GameOverMenu extends Menu {
         can.drawColor(Color.BLACK);
         super.draw(can);
 
-        paint.setColor(Color.WHITE);
-        paint.setTextSize(100);
-        Render.drawCenterText(can, paint, CENTER_X, 200, "Game Over");
 
-        paint.setTextSize(70);
-        Render.drawCenterText(can, paint, CENTER_X, 400, "Time: " + String.format("%.2f", playTime) + " s");
+        if(playTime > prevBest) {
+            paint.setColor(Color.WHITE);
+            paint.setTextSize(100);
+            Render.drawCenterText(can, paint, CENTER_X, 200, "High Score!");
+
+            paint.setTextSize(85);
+            Render.drawCenterText(can, paint, CENTER_X, 350, String.format("%.2f", playTime) + " s");
+
+            paint.setTextSize(65);
+            Render.drawCenterText(can, paint, CENTER_X, 550, "Previous: " + String.format("%.2f", prevBest) + " s");
+        } else {
+            paint.setColor(Color.WHITE);
+            paint.setTextSize(100);
+            Render.drawCenterText(can, paint, CENTER_X, 150, "Game Over");
+
+            paint.setTextSize(75);
+            Render.drawCenterText(can, paint, CENTER_X, 400, "Time: " + String.format("%.2f", playTime) + " s");
+            Render.drawCenterText(can, paint, CENTER_X, 500, "Best: " + String.format("%.2f", settings.getHighScore()) + " s");
+        }
+
     }
 
     @Override

@@ -19,6 +19,7 @@ public class MainMenu extends Menu {
 
     private Bitmap logo;
     private Matrix logoMatrix;
+    private Button musicButton;
 
     public MainMenu(GameLoop gl){
         super(gl);
@@ -35,8 +36,7 @@ public class MainMenu extends Menu {
     protected void addElements(){
         addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y - 150, "Play"));
         addButton(new Button(1, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y, "How To Play"));
-
-        addButton(new Button(2, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 150, "Music"));
+        addButton(new Button(2, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 150, "Music: " + (settings.getMusicStatus() ? "On" : "Off")));
     }
 
     @Override
@@ -58,6 +58,7 @@ public class MainMenu extends Menu {
                 break;
             case 2:
                 gl.toggleMusic();
+                b.setText("Music: " + (settings.getMusicStatus() ? "On" : "Off"));
                 break;
         }
     }
