@@ -28,7 +28,7 @@ public class MainActivity extends Activity {
         adView.setAdSize(AdSize.SMART_BANNER);
 
         adView.setVisibility(View.VISIBLE);
-        adView.loadAd(new AdRequest.Builder().addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build());
+        adView.loadAd(new AdRequest.Builder().build());
 
         LinearLayout layout = new LinearLayout(this);
         layout.setOrientation(LinearLayout.VERTICAL);
