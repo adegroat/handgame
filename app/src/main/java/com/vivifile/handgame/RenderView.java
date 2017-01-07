@@ -2,7 +2,6 @@ package com.vivifile.handgame;
 
 import android.content.Context;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -32,7 +31,6 @@ public class RenderView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        Log.d(TAG, "surfaceCreated");
         gameLoop = new GameLoop(surfaceHolder, getContext());
         gameLoop.doStart();
         HEIGHT = getHeight();
@@ -45,7 +43,6 @@ public class RenderView extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        Log.d(TAG, "surfaceDestroyed");
         gameLoop.doStop();
     }
 

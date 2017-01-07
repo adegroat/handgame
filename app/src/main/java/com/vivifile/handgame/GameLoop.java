@@ -1,12 +1,8 @@
 package com.vivifile.handgame;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.media.MediaPlayer;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
@@ -15,7 +11,6 @@ import com.vivifile.handgame.Gui.InGameMenu;
 import com.vivifile.handgame.Gui.Menu;
 import com.vivifile.handgame.Gui.MainMenu;
 
-import java.util.Random;
 import java.util.Stack;
 
 /**

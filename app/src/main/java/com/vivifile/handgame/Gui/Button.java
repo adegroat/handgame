@@ -3,7 +3,6 @@ package com.vivifile.handgame.Gui;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
 import android.view.MotionEvent;
 import com.vivifile.handgame.GameLoop;
 import com.vivifile.handgame.Render;

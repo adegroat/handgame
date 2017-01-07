@@ -9,7 +9,6 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.MediaPlayer;
 import android.provider.Settings;
-import android.util.Log;
 
 import com.vivifile.handgame.R;
 import com.vivifile.handgame.Render;
