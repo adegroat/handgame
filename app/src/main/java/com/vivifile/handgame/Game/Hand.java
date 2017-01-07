@@ -32,7 +32,7 @@ public class Hand {
     private Bitmap handBitmap, handBitmapCopy;
     private boolean isTapping, isDoubleTap;
     private long tapStart, outTime;
-    private MediaPlayer tapPlayer, doubleTapPlayer;
+    private static MediaPlayer tapPlayer, doubleTapPlayer;
 
     public Hand(int handColor, boolean isRightHand, Context context){
         this.handColor = handColor;
@@ -42,7 +42,6 @@ public class Hand {
         loadBitmaps(context);
         tapPlayer = MediaPlayer.create(context, R.raw.tap);
         doubleTapPlayer = MediaPlayer.create(context, R.raw.double_tap);
-
     }
 
     private void loadBitmaps(Context context){
@@ -120,9 +119,5 @@ public class Hand {
 
     public Bitmap getHandBitmap() {
         return handBitmap;
-    }
-
-    public int getHandColor(){
-        return handColor;
     }
 }
