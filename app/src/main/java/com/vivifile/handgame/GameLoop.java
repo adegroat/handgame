@@ -104,7 +104,7 @@ public class GameLoop extends Thread {
     public void startMusic(){
         if(mediaPlayer != null) return;
 
-        mediaPlayer = MediaPlayer.create(context, R.raw.handgame_song2);
+        mediaPlayer = MediaPlayer.create(context, R.raw.handgame_song);
         mediaPlayer.setLooping(true);
         mediaPlayer.start();
     }

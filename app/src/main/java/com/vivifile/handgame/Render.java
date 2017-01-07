@@ -6,6 +6,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.text.TextUtils;
+
+import java.util.ArrayList;
 
 /**
  * Created by alex on 1/3/17.
@@ -25,5 +28,29 @@ public class Render {
         Rect textBounds = new Rect();
         paint.getTextBounds(text, 0, text.length(), textBounds);
         can.drawText(text, centerX - (textBounds.width() / 2), centerY + (textBounds.height() / 2), paint);
+    }
+
+    public static void drawSmartText(Canvas can, Paint paint, float x, float y, String text) {
+        Rect bounds = new Rect();
+        paint.getTextBounds(text, 0, text.length(), bounds);
+        String newText = "";
+        float offsetY = 0;
+
+        if(bounds.width() >= RenderView.WIDTH - x - 10) {
+            String words[] = text.split(" ");
+
+            for(int i = 0; i < words.length; ++i) {
+                newText += words[i] + " ";
+                Rect newTextBounds = new Rect();
+                String oneForward = newText + ((i + 1) >= words.length ? "" : words[i + 1]);
+                paint.getTextBounds(oneForward, 0, oneForward.length(), newTextBounds);
+
+                can.drawText(newText, x, y + offsetY, paint);
+                if(newTextBounds.width() >= RenderView.WIDTH - x - 10) {
+                    newText = "";
+                    offsetY += bounds.height() + 15;
+                }
+            }
+        }
     }
 }

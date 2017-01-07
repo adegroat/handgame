@@ -32,8 +32,9 @@ public class HelpMenu extends Menu {
         Render.drawCenterText(can, paint, CENTER_X, 300, "How To Play");
 
         paint.setTextSize(40);
-        can.drawText("Each round you're assigned a specific color.", 70, 400, paint);
-        can.drawText("When it lands on your color, press the correct button.", 70, 450, paint);
+        can.drawText("Take turns tapping in a circle.", 70, 400, paint);
+        Render.drawSmartText(can, paint, 70, 470, "When its your turn, tap on the correct hand at the bottom of the screen.");
+        can.drawText("Double taps reverse the direction of the game.", 70, 600, paint);
     }
 
     @Override
