@@ -26,14 +26,17 @@ public class MainMenu extends Menu {
 
         Matrix scale = new Matrix();
         float scaleX = 0.9f * (float)RenderView.WIDTH / (float)logo.getWidth();
-        scale.preScale(scaleX, 1.0f);
+        float scaleY = 1.9f * (float)logo.getHeight() / (float)RenderView.WIDTH;
+        scale.preScale(scaleX, scaleY);
         logo = Bitmap.createBitmap(logo, 0, 0, logo.getWidth(), logo.getHeight(), scale, false);
     }
 
     @Override
     protected void addElements(){
-        addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y - 100, "Play"));
-        addButton(new Button(1, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 100, "How To Play"));
+        addButton(new Button(0, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y - 150, "Play"));
+        addButton(new Button(1, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y, "How To Play"));
+
+        addButton(new Button(2, Button.BUTTON_FILL_CENTER_X, Button.BUTTON_CENTER_Y + 150, "Music"));
     }
 
     @Override
@@ -52,6 +55,10 @@ public class MainMenu extends Menu {
                 break;
             case 1:
                 gl.menus.push(new HelpMenu(gl));
+                break;
+            case 2:
+                gl.toggleMusic();
+                break;
         }
     }
 }

@@ -67,8 +67,8 @@ public class Hand {
 
     public void tap(boolean isDoubleTap){
         if(isOut) return;
-        tapStart = Game.getTime();
         this.isDoubleTap = isDoubleTap;
+        tapStart = Game.getTime();
         isTapping = true;
     }
 
@@ -83,22 +83,21 @@ public class Hand {
 
             if(dt > 200) {
                 handBitmap = handBitmapCopy;
-                if(!isDoubleTap) tapPlayer.start();
-                else doubleTapPlayer.start();
 
                 if(isDoubleTap){
+                    doubleTapPlayer.start();
                     if(dt > 350) {
                         handBitmap = scaledHand;
                         if(dt > 450) {
                             handBitmap = handBitmapCopy;
-                            //tapPlayer.start();
                             isTapping = false;
-                            isDoubleTap = false;
                         }
                     }
-                } else isTapping = false;
+                } else {
+                    tapPlayer.start();
+                    isTapping = false;
+                }
             }
-
         }
     }
 

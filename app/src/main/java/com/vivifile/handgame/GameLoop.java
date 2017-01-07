@@ -13,6 +13,7 @@ import com.vivifile.handgame.Gui.InGameMenu;
 import com.vivifile.handgame.Gui.Menu;
 import com.vivifile.handgame.Gui.MainMenu;
 
+import java.util.Random;
 import java.util.Stack;
 
 /**
@@ -38,7 +39,6 @@ public class GameLoop extends Thread {
     }
 
     public void startNewGame(){
-        menus.clear();
         menus.push(new InGameMenu(this).setOverlay(false));
         game = new Game(this);
     }
@@ -69,14 +69,13 @@ public class GameLoop extends Thread {
         }
     }
 
+
     private void draw(Canvas can) {
         can.drawColor(Render.COLOR_BLUE);
 
-        if(game != null){
-           game.draw(can);
-        }
+        if(game != null) game.draw(can);
 
-        menus.peek().draw(can);
+        if(menus.peek() != null) menus.peek().draw(can);
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -104,6 +103,12 @@ public class GameLoop extends Thread {
     public void stopMusic(){
         if(mediaPlayer == null) return;
         mediaPlayer.release();
+        mediaPlayer = null;
+    }
+
+    public void toggleMusic(){
+        if(mediaPlayer == null) startMusic();
+        else stopMusic();
     }
 
     public void doStart(){

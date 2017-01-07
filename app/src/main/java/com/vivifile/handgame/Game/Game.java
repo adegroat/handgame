@@ -4,8 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.provider.Settings;
-import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 
 import com.vivifile.handgame.GameLoop;
@@ -27,14 +26,15 @@ public class Game {
     private Table table;
     private boolean gameStarted = false;
     private Paint paint;
-    private int countdownTime = 3;
+    private int countdownTime;
     private long prevTime, startTime;
 
     public Game(GameLoop gl) {
         this.gl = gl;
         table = new Table(this, 4);
         paint = new Paint();
-        prevTime = System.currentTimeMillis();
+        prevTime = Game.getTime();
+        countdownTime = 3;
     }
 
     public void draw(Canvas can) {
