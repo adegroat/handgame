@@ -1,1 +1,1 @@
-The funnest hand tapping game created for android.
+A simple game made for android.
